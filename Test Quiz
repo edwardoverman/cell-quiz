@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fun Cell Study Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .question { margin: 20px; font-size: 18px; }
+        .options { list-style-type: none; padding: 0; }
+        .options li { background: lightblue; margin: 5px; padding: 10px; cursor: pointer; }
+        .options li:hover { background: deepskyblue; }
+        #result { font-size: 20px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Fun Cell Study Quiz</h1>
+    <div id="quiz"></div>
+    <button onclick="nextQuestion()">Next</button>
+    <div id="result"></div>
+
+    <script>
+        const questions = [
+            { 
+                question: "What is the basic unit of life?", 
+                options: ["Organism", "Tissue", "Cell", "Nucleus"], 
+                answer: "Cell"
+            },
+            { 
+                question: "Which of these is a characteristic of living things?", 
+                options: ["Requires food", "Made of metal", "Never changes", "Always invisible"], 
+                answer: "Requires food"
+            },
+            { 
+                question: "Which organelle controls the cell?", 
+                options: ["Vacuole", "Nucleus", "Mitochondria", "Cell membrane"], 
+                answer: "Nucleus"
+            },
+            { 
+                question: "What is the function of chloroplasts?", 
+                options: ["Store water", "Control the cell", "Make food", "Recycle waste"], 
+                answer: "Make food"
+            },
+            { 
+                question: "Which kingdom includes single-celled organisms with no nucleus?", 
+                options: ["Animals", "Bacteria", "Plants", "Fungi"], 
+                answer: "Bacteria"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        
+        function loadQuestion() {
+            document.getElementById("result").innerText = "";
+            let quizDiv = document.getElementById("quiz");
+            quizDiv.innerHTML = "";
+            let q = document.createElement("div");
+            q.className = "question";
+            q.innerText = questions[currentQuestion].question;
+            quizDiv.appendChild(q);
+            
+            let ul = document.createElement("ul");
+            ul.className = "options";
+            
+            questions[currentQuestion].options.forEach(option => {
+                let li = document.createElement("li");
+                li.innerText = option;
+                li.onclick = () => checkAnswer(option);
+                ul.appendChild(li);
+            });
+            
+            quizDiv.appendChild(ul);
+        }
+        
+        function checkAnswer(selected) {
+            let correct = questions[currentQuestion].answer;
+            if (selected === correct) {
+                document.getElementById("result").innerText = "Correct! 🎉";
+            } else {
+                document.getElementById("result").innerText = "Try Again! ❌";
+            }
+        }
+        
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                document.getElementById("quiz").innerHTML = "Quiz Complete! 🎊";
+                document.getElementById("result").innerText = "Great job!";
+            }
+        }
+        
+        loadQuestion();
+    </script>
+</body>
+</html>
